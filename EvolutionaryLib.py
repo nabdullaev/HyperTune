@@ -1,16 +1,6 @@
-import enum
 import random
 import os
 import contextlib
-
-
-class ConstraintType(enum.Enum):
-    continuous = 1
-    discrete = 2
-    composite = 3
-
-    def __repr__(self):
-        return self.name
 
 
 class GeneType(object):
@@ -106,8 +96,6 @@ class ChromosomeClassFactory(object):
         self.constraints = []
 
         for constraint, values in constraints.items():
-            constraint_data: GeneType = None
-
             if type(values) is list:
                 constraint_data = DiscreteGene(values)
 
@@ -141,9 +129,9 @@ class ChromosomeClassFactory(object):
             with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
                 instance.crossover(None)
                 instance.mutate()
-        except NotImplementedError as e:
+        except NotImplementedError:
             raise NotImplementedError('You must implement crossover and mutate methods before creating chromosomes')
-        except Exception as e:
+        except Exception:
             pass
 
         for field, constraint in self.constraints:
