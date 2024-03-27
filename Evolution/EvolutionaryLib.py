@@ -1,6 +1,6 @@
 import os
 import contextlib
-from Genes import *
+from Evolution.Genes import *
 
 
 class BaseChromosome(object):
@@ -94,6 +94,8 @@ class ChromosomeClassFactory(object):
                 instance.mutate()
         except NotImplementedError:
             raise NotImplementedError('You must implement crossover and mutate methods before creating chromosomes')
+        except Exception:
+            pass
 
         for field, constraint in self.constraints:
             instance.__dict__['_' + field] = constraint.copy()
