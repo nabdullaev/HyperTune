@@ -65,10 +65,15 @@ class ChromosomeClassFactory(object):
 
             elif type(values) is tuple:
                 constraint_data = ContinuousGene(values)
+
             elif type(values) is dict:
                 if set(values.keys()) == {'n', 'range'}:
-                    if type(values['n']) is not int or values['n'] < 2:
-                        raise TypeError('number of composite genes can be int >= 2 only')
+                    if type(values['n']) is not list:
+                        raise TypeError('number of composite genes passes as list')
+                    if len(values['n']) < 2:
+                        raise ValueError('number of composite genes should be >= 2')
+                    if not isinstance(values['n'][0], int):
+                        raise TypeError('possible sizes must be integers')
 
                     if type(values['range']) not in {tuple, list}:
                         raise TypeError('range of composite genes can be only passed in list or tuple')
