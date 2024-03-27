@@ -93,7 +93,7 @@ class CompositeGene(GeneType):
         return tuple([random.choice(values_set) for _ in range(current_size)])
 
     def mutate(self):
-        raise self.get()
+        return self.get()
 
     def __copy__(self):
         return CompositeGene(self.size, self.parameters)
