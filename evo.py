@@ -1,3 +1,5 @@
+import random
+
 from EvolutionaryLib import *
 
 
@@ -7,35 +9,44 @@ class MyChromosome(BaseChromosome):
 
     def crossover(self, other):
         new = MyChromosome()
-        self.copy_prototypes(new)
+        self.copy(new)
 
-        return
-
-    def mutate(self, rate=0.3):
-        new = MyChromosome()
-        self.copy_prototypes(new)
-        prototypes = new.get_field_prototypes()
-
-        for field in self.get_field_names():
-            if random.random() < rate:
-                setattr(new, field, prototypes['_' + field].get())
-            else:
-                setattr(new, field, getattr(self, field))
+        for field in new:
+            new[field].value = random.choice([self[field], other[field]]).value
 
         return new
 
+    def mutate(self, rate=0.3):
+        new = MyChromosome()
+        self.copy(new)
+
+        for field in new:
+            if random.random() < rate:
+                new[field].value = new[field].get()
+            else:
+                new[field] = self[field]
+        return new
+
+
+def err(*a, **b):
+    raise ProcessLookupError('pizdec')
+
 
 if __name__ == '__main__':
-    chromosome_factory = ChromosomeClassFactory(a=list(range(1, 10)),
-                                                b=(1, 5),
-                                                c={'n': 4, 'range': (1, 100)},
-                                                d={'n': 2, 'range': list(range(1, 5))}
-                                                )
-    print(chromosome_factory)
+    chromosome_factory = ChromosomeClassFactory(
+        a=(1, 3),
+        b=list(range(1, 20)),
+        c={'n': 3, 'range': (1, 40)},
+        d={'n': 2, 'range': list(range(1, 5))})
+
     c1 = chromosome_factory.generate(MyChromosome)
-    c2 = chromosome_factory.generate(MyChromosome)
-
     print(c1)
-    print(c1.mutate())
 
-    print(c1.get_field_prototypes())
+    c2 = chromosome_factory.generate(MyChromosome)
+    print(c2)
+
+    c3 = c1.crossover(c2)
+    print(c3)
+
+    c3 = c3.mutate()
+    print(c3)
