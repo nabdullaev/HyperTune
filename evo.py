@@ -28,10 +28,6 @@ class MyChromosome(BaseChromosome):
         return new
 
 
-def err(*a, **b):
-    raise ProcessLookupError('pizdec')
-
-
 if __name__ == '__main__':
     chromosome_factory = ChromosomeClassFactory(
         a=(1, 3),
