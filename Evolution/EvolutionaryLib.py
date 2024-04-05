@@ -5,11 +5,12 @@ from Evolution.Genes import *
 
 class BaseChromosome(object):
     def __init__(self):
+        self.__dict__['score'] = None
         for field in self:
             if field.startswith('_'):
                 self[field].value = self[field].get()
 
-    def crossover(self, other):
+    def crossover(self, other): 
         raise NotImplementedError()
 
     def mutate(self):
@@ -19,6 +20,12 @@ class BaseChromosome(object):
         for field, constraint in self.__dict__.items():
             if field.startswith('_'):
                 new.__dict__[field] = constraint.copy()
+
+    def set_score(self, score):
+        self.__dict__['score'] = score
+
+    def get_score(self):
+        return self.__dict__['score']
 
     def __getitem__(self, item):
         return self.__getattr__(item)
@@ -30,7 +37,10 @@ class BaseChromosome(object):
         if item.startswith('_'):
             return self.__dict__[item]
 
-        return self.__dict__['_' + item].value
+        try:
+            return self.__dict__['_' + item].value
+        except KeyError:
+            return self.__dict__[item]
 
     def __setattr__(self, key, value):
         if key.startswith('_'):
@@ -48,11 +58,19 @@ class BaseChromosome(object):
 
     def __str__(self):
         res = '--Chromosome--\n'
+        res += f'score: {self.get_score()}\n'
         for field in self.__dict__:
             if field.startswith('_') and isinstance(self.__dict__[field], GeneType):
                 res += field.strip('_') + ": " + str(getattr(self, field).value) + '\n'
 
         return res
+
+    def __getstate__(self):
+        return self.__dict__
+
+    def __setstate__(self, d):
+        for key in d:
+            self.__dict__[key] = d[key]
 
 
 class ChromosomeClassFactory(object):
