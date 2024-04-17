@@ -1,1 +1,1 @@
-from Evolution.EvolutionaryLib import *
+__all__ = ['EvolutionaryLib', 'Genes']
