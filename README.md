@@ -1,10 +1,8 @@
 # HyperTune
 
-HyperTune is a Python-based project focused on optimizing hyperparameters for machine learning and deep learning algorithms using nature-inspired optimization techniques.
-
 ## Overview
 
-Hyperparameter optimization plays a crucial role in maximizing the performance and efficiency of machine learning and deep learning models. HyperTune aims to automate this process by leveraging genetic algorithms (GA) to efficiently explore the hyperparameter space. By intelligently searching for the best combination of hyperparameters, HyperTune helps researchers and practitioners achieve optimal model performance without the need for manual tuning.
+HyperTune is a Python-based project focused on optimizing hyperparameters for machine learning and deep learning algorithms using nature-inspired optimization techniques. Hyperparameter optimization plays a crucial role in maximizing the performance and efficiency of machine learning and deep learning models. HyperTune aims to automate this process by leveraging genetic algorithms (GA) to efficiently explore the hyperparameter space. By intelligently searching for the best combination of hyperparameters, HyperTune helps researchers and practitioners achieve optimal model performance without the need for manual tuning.
 
 ## Features
 
@@ -19,12 +17,11 @@ Hyperparameter optimization plays a crucial role in maximizing the performance a
     
 ## Installation
 
-To install HyperTune, simply clone the repository and install the required dependencies using the following commands:
+To install HyperTune, simply clone the repository:
 
 ```cpp
 git clone git@github.com:nabdullaev/HyperTune.git
 cd HyperTune
-pip install -r requirements.txt
 
 ```
 
